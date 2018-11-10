@@ -1,8 +1,7 @@
 .idea/
 
-corpora/
+corpora/*
 !corpora/.gitkeep
 
-log
+log/*
 !log/.gitkeep
-
