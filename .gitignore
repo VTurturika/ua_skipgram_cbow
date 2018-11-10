@@ -1,0 +1,8 @@
+.idea/
+
+corpora/
+!corpora/.gitkeep
+
+log
+!log/.gitkeep
+
