@@ -22,16 +22,10 @@ print('Start')
 
 def read_files():
     result = ''
-    with open('corpora/xaa_prepared', 'r') as file:
+    with open('corpora/wiki_prepared', 'r') as file:
         result = file.read()
     print('Loaded text file')    
     return result
-
-
-def read_stopwords():
-    with open('stopwords_ua', 'r') as file:
-        print('Loaded stopwords')
-        return file.read().split()
 
 
 def create_vocabulary(text):
@@ -45,9 +39,9 @@ def create_vocabulary(text):
 
 
 text = read_files()
-# stopwords = read_stopwords()
 vocabulary = create_vocabulary(text)
 del text
+
 
 def build_dataset(words, n_words):
     """Process raw inputs into a dataset."""
@@ -73,9 +67,11 @@ def build_dataset(words, n_words):
 
 data, count, vocabulary_size, dictionary, reverse_dictionary = build_dataset(vocabulary, 50000)
 del vocabulary
-data_index = 0
-log_dir = 'log/'
 
+timestamp = datetime.datetime.now().strftime("%m.%d-%H:%M:%S")
+log_dir = 'models/cbow.{0}/'.format(timestamp)
+os.mkdir(log_dir)
+data_index = 0
 
 # Step 3: Function to generate a training batch for cbow model.
 def generate_batch(batch_size, context_window):
@@ -105,7 +101,7 @@ for i in range(8):
           batch[i, 1], reverse_dictionary[batch[i, 1]],
           '->', labels[i, 0], reverse_dictionary[labels[i, 0]])
 
-# Build and train a skip-gram model.
+# Build and train a cbow model.
 
 batch_size = 128
 embedding_size = 128  # Dimension of the embedding vector.
@@ -303,7 +299,7 @@ try:
     plot_only = 300
     low_dim_embs = tsne.fit_transform(final_embeddings[:plot_only, :])
     labels = [reverse_dictionary[i] for i in xrange(plot_only)]
-    filename = 'tsne/wiki.{0}.png'.format(datetime.datetime.now().strftime("%m%d-%H%M%S"))
+    filename = 'tsne/cbow/wiki.{0}.png'.format(timestamp)
     plot_with_labels(low_dim_embs, labels, filename)
 
 except ImportError as ex:

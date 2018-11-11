@@ -1,10 +1,10 @@
 .idea/
 
-corpora/*
-!corpora/.gitkeep
+train/corpora/*
+!train/corpora/.gitkeep
 
-log/*
-!log/.gitkeep
+train/models/*
+!train/models/.gitkeep
 
 server/__pycache__
 server/*/__pycache__

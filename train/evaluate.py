@@ -2,10 +2,16 @@ import argparse
 import sys
 import tensorflow as tf
 
+parser = argparse.ArgumentParser()
+parser.add_argument('model', metavar='model', type=str, help='skipgram|cbow')
+args = parser.parse_args()
 
+if args.model != 'skipgram' and args.model != 'cbow':
+    print('usage: python evaluate.py skipgram|cbow')
+    sys.exit(0)
 
 def read_dictionary():
-    with open('log/metadata.tsv', 'r') as file:
+    with open('models/{0}/metadata.tsv'.format(args.model), 'r') as file:
         words = file.read().split()
         dictionary = {}
         for (i, word) in enumerate(words):
@@ -29,8 +35,8 @@ def get_nearest(embeddings, word=None, embedding=None):
 
 
 with tf.Session() as sess:
-    saver = tf.train.import_meta_graph('log/model.ckpt.meta')
-    saver.restore(sess, 'log/model.ckpt')
+    saver = tf.train.import_meta_graph('models/{0}/model.ckpt.meta'.format(args.model))
+    saver.restore(sess, 'models/{0}/model.ckpt'.format(args.model))
 
     embeddings = tf.get_variable_scope().global_variables()[0]
     norm = tf.sqrt(tf.reduce_sum(tf.square(embeddings), 1, keepdims=True))
@@ -47,5 +53,3 @@ with tf.Session() as sess:
         else:
             print('unknown word')
         query = input('query = ')
-
-print('success')
