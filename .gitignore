@@ -5,3 +5,6 @@ corpora/*
 
 log/*
 !log/.gitkeep
+
+server/__pycache__
+server/*/__pycache__

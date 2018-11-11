@@ -4,7 +4,7 @@ import tensorflow as tf
 
 
 def read_dictionary():
-    with open('../log/metadata.tsv', 'r') as file:
+    with open('../log/skipgram/metadata.tsv', 'r') as file:
         words = file.read().split()
         dictionary = {}
         for (i, word) in enumerate(words):
@@ -25,10 +25,10 @@ def evaluate(embeddings, word=None, embedding=None):
 
 dictionary, reversed_dictionary = read_dictionary()
 
-def get_nearest(word):
+def get_nearest_skipgram(word):
     with tf.Session() as sess:
-        saver = tf.train.import_meta_graph('../log/model.ckpt.meta')
-        saver.restore(sess, '../log/model.ckpt')
+        saver = tf.train.import_meta_graph('../log/skipgram/model.ckpt.meta')
+        saver.restore(sess, '../log/skipgram/model.ckpt')
 
         embeddings = tf.get_variable_scope().global_variables()[0]
         norm = tf.sqrt(tf.reduce_sum(tf.square(embeddings), 1, keepdims=True))
