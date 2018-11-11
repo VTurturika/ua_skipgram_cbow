@@ -1,0 +1,19 @@
+version: "2"
+services:
+    web:
+      image: nginx:latest
+      ports:
+      - '80:80'
+      volumes:
+      - ./web:/usr/share/nginx/html
+    api:
+      build: ./api 
+      ports:
+      - '5000:5000'
+      volumes:
+      - ./api:/api
+      environment:
+      - FLASK_APP=server.py  
+      - LC_ALL=C.UTF-8
+      - LANG=C.UTF-8
+      
