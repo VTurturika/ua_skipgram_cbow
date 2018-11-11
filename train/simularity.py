@@ -18,7 +18,7 @@ else:
 
 
 def read_tests():
-	with open('tests/simularity.txt', 'r') as file:
+	with open('tests/simularity.tsv', 'r') as file:
 		return [line.split() for line in file.readlines()]
 
 
