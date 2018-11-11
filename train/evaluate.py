@@ -4,14 +4,20 @@ import tensorflow as tf
 
 parser = argparse.ArgumentParser()
 parser.add_argument('model', metavar='model', type=str, help='skipgram|cbow')
+parser.add_argument('--version', metavar='version', type=str, help='mm.dd-hh:mm:ss')
 args = parser.parse_args()
 
 if args.model != 'skipgram' and args.model != 'cbow':
     print('usage: python evaluate.py skipgram|cbow')
     sys.exit(0)
 
+if args.version:
+    model_path = 'models/{0}.{1}'.format(args.model, args.version)
+else:
+    model_path = 'models/{0}'.format(args.model)
+
 def read_dictionary():
-    with open('models/{0}/metadata.tsv'.format(args.model), 'r') as file:
+    with open('{0}/metadata.tsv'.format(model_path), 'r') as file:
         words = file.read().split()
         dictionary = {}
         for (i, word) in enumerate(words):
@@ -35,8 +41,8 @@ def get_nearest(embeddings, word=None, embedding=None):
 
 
 with tf.Session() as sess:
-    saver = tf.train.import_meta_graph('models/{0}/model.ckpt.meta'.format(args.model))
-    saver.restore(sess, 'models/{0}/model.ckpt'.format(args.model))
+    saver = tf.train.import_meta_graph('{0}/model.ckpt.meta'.format(model_path))
+    saver.restore(sess, '{0}/model.ckpt'.format(model_path))
 
     embeddings = tf.get_variable_scope().global_variables()[0]
     norm = tf.sqrt(tf.reduce_sum(tf.square(embeddings), 1, keepdims=True))
