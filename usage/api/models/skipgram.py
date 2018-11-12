@@ -35,7 +35,7 @@ def get_nearest_skipgram(word):
         normalized_embeddings = embeddings / norm
 
         if dictionary.get(word, -1) == -1:
-            return 'unknown word'
+            return None
         nearest = evaluate(normalized_embeddings, word=word)
         nearest_words = [reversed_dictionary[id] for id in nearest]
         return nearest_words
