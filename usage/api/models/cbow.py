@@ -38,4 +38,4 @@ def get_nearest_cbow(word):
             return 'unknown word'
         nearest = evaluate(normalized_embeddings, word=word)
         nearest_words = [reversed_dictionary[id] for id in nearest]
-        return 'Nearest to {0}: {1}'.format(word, ', '.join(nearest_words))
+        return nearest_words
