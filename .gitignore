@@ -6,5 +6,13 @@ train/corpora/*
 train/models/*
 !train/models/.gitkeep
 
-server/__pycache__
-server/*/__pycache__
+train/tsne/*
+!train/tsne/cbow/.gitkeep
+!train/tsne/skipgram/.gitkeep
+
+usage/api/__pycache__
+usage/api/models/__pycache__
+usage/api/models/cbow/*
+!usage/api/models/cbow/.gitkeep
+usage/api/models/skipgram/*
+!usage/api/models/skipgram/.gitkeep
