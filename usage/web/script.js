@@ -6,7 +6,8 @@ var app = new Vue({
     skipgram: ['-']
   },
   methods: {
-  	search() {
+  	search(e) {
+      e.preventDefault()
   		fetch('http://localhost:5000/get-simular', {
   			method: 'POST',
   			headers: {

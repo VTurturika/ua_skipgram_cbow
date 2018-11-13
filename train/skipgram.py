@@ -64,7 +64,8 @@ def build_dataset(words, n_words):
     return data, count, vocabulary_size, dictionary, reversed_dictionary
 
 
-data, count, vocabulary_size, dictionary, reverse_dictionary = build_dataset(vocabulary, 50000)
+n_words = 10000
+data, count, vocabulary_size, dictionary, reverse_dictionary = build_dataset(vocabulary, n_words)
 del vocabulary
 
 timestamp = datetime.datetime.now().strftime("%m.%d-%H:%M:%S")
@@ -257,18 +258,18 @@ with tf.Session(graph=graph) as session:
     final_embeddings = normalized_embeddings.eval()
 
     # Write corresponding labels for the embeddings.
-    with open(log_dir + '/metadata.tsv', 'w') as f:
+    with open(log_dir + '/skipgram.tsv', 'w') as f:
         for i in xrange(vocabulary_size):
             f.write(reverse_dictionary[i] + '\n')
 
     # Save the model for checkpoints.
-    saver.save(session, os.path.join(log_dir, 'model.ckpt'))
+    saver.save(session, os.path.join(log_dir, 'skipgram.ckpt'))
 
     # Create a configuration for visualizing embeddings with the labels in TensorBoard.
     config = projector.ProjectorConfig()
     embedding_conf = config.embeddings.add()
     embedding_conf.tensor_name = embeddings.name
-    embedding_conf.metadata_path = 'metadata.tsv'
+    embedding_conf.metadata_path = 'skipgram.tsv'
     projector.visualize_embeddings(writer, config)
 
 writer.close()

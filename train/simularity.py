@@ -26,7 +26,7 @@ tests = read_tests()
 
 
 def read_dictionary():
-	with open('{0}/metadata.tsv'.format(model_path), 'r') as file:
+	with open('{0}/{1}.tsv'.format(model_path, args.model), 'r') as file:
 		words = file.read().split()
 		dictionary = {}
 		for (i, word) in enumerate(words):
@@ -58,8 +58,8 @@ def calculate_score(actual, expected):
 
 
 with tf.Session() as sess:
-	saver = tf.train.import_meta_graph('{0}/model.ckpt.meta'.format(model_path))
-	saver.restore(sess, '{0}/model.ckpt'.format(model_path))
+	saver = tf.train.import_meta_graph('{0}/{1}.ckpt.meta'.format(model_path, args.model))
+	saver.restore(sess, '{0}/{1}.ckpt'.format(model_path, args.model))
 
 	embeddings = tf.get_variable_scope().global_variables()[0]
 	norm = tf.sqrt(tf.reduce_sum(tf.square(embeddings), 1, keepdims=True))

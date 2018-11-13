@@ -1,0 +1,11 @@
+version: "2"
+services:
+  tensorflow:
+    build:  '.'
+    volumes:
+    - '.:/train/'
+    ports:
+    - '6006:6006'
+    environment:
+    - LC_ALL=C.UTF-8
+    - LANG=C.UTF-8

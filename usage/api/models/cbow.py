@@ -4,7 +4,7 @@ import tensorflow as tf
 
 
 def read_dictionary():
-    with open('models/cbow/metadata.tsv', 'r') as file:
+    with open('models/cbow/cbow.tsv', 'r') as file:
         words = file.read().split()
         dictionary = {}
         for (i, word) in enumerate(words):
@@ -27,8 +27,8 @@ dictionary, reversed_dictionary = read_dictionary()
 
 def get_nearest_cbow(word):
     with tf.Session() as sess:
-        saver = tf.train.import_meta_graph('models/cbow/model.ckpt.meta')
-        saver.restore(sess, 'models/cbow/model.ckpt')
+        saver = tf.train.import_meta_graph('models/cbow/cbow.ckpt.meta')
+        saver.restore(sess, 'models/cbow/cbow.ckpt')
 
         embeddings = tf.get_variable_scope().global_variables()[0]
         norm = tf.sqrt(tf.reduce_sum(tf.square(embeddings), 1, keepdims=True))
