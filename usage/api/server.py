@@ -6,7 +6,7 @@ from models.skipgram import get_nearest_skipgram
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/get-simular', methods=['post'])
+@app.route('/get-similar', methods=['post'])
 def get_simular():
 	word = request.get_json()['word']
 	cbow = get_nearest_cbow(word)
