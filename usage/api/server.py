@@ -7,7 +7,7 @@ app = Flask(__name__)
 CORS(app)
 
 @app.route('/get-similar', methods=['post'])
-def get_simular():
+def get_similar():
 	word = request.get_json()['word']
 	cbow = get_nearest_cbow(word)
 	skipgram = get_nearest_skipgram(word)
